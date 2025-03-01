@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <numeric>
+#include <fstream>
 using namespace std;
 
 void Rainfall::die() {
@@ -48,6 +49,7 @@ void Rainfall::init_data(vector<int>& rainyDays, vector<int>& totalDays) {
 		cin >> data;
 	}
 }
+
 void Rainfall::print_user_prompt() {
 	cout << "1) Average daily rainfall" << endl;
 	cout << "2) Average rainfall on rainy days" << endl;
@@ -86,4 +88,12 @@ void Rainfall::print_top_rainfall(vector<int>& rainyDays) {
 			}
 		}
 	}
+}
+
+void Rainfall::write_benchmark(const int version, const float timer, vector<int>& totalDays) {
+	fstream file("benchmark.txt", fstream::app);
+	file << "Version: " + to_string(version) + "\n";
+	file << "Days: " + to_string(totalDays.size()) + "\n";
+	file << "Time: " + to_string(timer) + "\n\n";
+	file.close();
 }

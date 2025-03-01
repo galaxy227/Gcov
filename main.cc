@@ -1,10 +1,19 @@
 #include "rainfall.h"
 #include <iostream>
-#include <vector>
-#include <istream>
+#include <chrono>
+using Time = std::chrono::high_resolution_clock::time_point;
+using Clock = std::chrono::high_resolution_clock;
+using Duration = std::chrono::duration<float>;
 using namespace std;
 
+// Version used to identify rainfall program in benchmark file
+static const int version = 1;
+
 int main() {
+	// Start benchmark
+	Time start_time = Clock::now();	
+
+	// Rainfall
 	vector<int> rainyDays;
 	vector<int> totalDays;
 
@@ -53,9 +62,13 @@ int main() {
 		}
 		//Else if user wants to quit, quit.
 		else if (userChoice == 6) {
-			exit(0);
+			break;
 		}
 
 		userChoice = 0;
 	}
+
+	// End benchmark
+	Duration duration = Clock::now() - start_time;
+	Rainfall::write_benchmark(version, duration.count(), totalDays);
 }
