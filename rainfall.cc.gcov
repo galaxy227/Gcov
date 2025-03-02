@@ -1,0 +1,100 @@
+        -:    0:Source:rainfall.cc
+        -:    1:#include "rainfall.h"
+        -:    2:#include <iostream>
+        -:    3:#include <algorithm>
+        -:    4:#include <cmath>
+        -:    5:#include <numeric>
+        -:    6:#include <fstream>
+        -:    7:using namespace std;
+        -:    8:
+    #####:    9:void Rainfall::die() {
+    #####:   10:	cout << "BAD INPUT!" << endl;
+    #####:   11:	exit(1);
+        -:   12:}
+        1:   13:void Rainfall::init_data(vector<int>& rainyDays, vector<int>& totalDays) {
+        1:   14:	int data = 0;
+        1:   15:	cout << "Please enter daily rainfall data (-1 to quit):" << endl;
+        1:   16:	cin >> data;
+        -:   17:
+   100001:   18:	while (data != -1) {
+  100000*:   19:		if (data == -1) break;
+        -:   20:
+        -:   21:		//If they enter anything but a number, die.
+   100000:   22:		if (!cin) {
+    #####:   23:			die();
+        -:   24:		}
+        -:   25:		//Else if data is any negative number besides -1.
+   100000:   26:		else if (data < -1) {
+        -:   27:			//While data is a negative number other than -1...
+    #####:   28:			while (data < -1) {
+        -:   29:				//If input is invalid, die.
+    #####:   30:				if (!cin) die();
+        -:   31:				//Else, discard it and reprompt.
+        -:   32:				else {
+    #####:   33:					cin.clear();
+    #####:   34:					cin.ignore(2200000000, '\n');
+    #####:   35:					cin >> data;
+        -:   36:
+    #####:   37:					if (data == -1) break;
+        -:   38:				}
+        -:   39:			}
+    #####:   40:			if (data == -1) break;
+        -:   41:		}
+        -:   42:		//If add the data point to the vector rainyDays.
+   100000:   43:		if (data > 0) {
+    95305:   44:			rainyDays.push_back(data);
+        -:   45:		}
+        -:   46:		//Keep track of all days.
+   100000:   47:		totalDays.push_back(data);
+        -:   48:
+   100000:   49:		cin >> data;
+        -:   50:	}
+        1:   51:}
+        -:   52:
+        6:   53:void Rainfall::print_user_prompt() {
+        6:   54:	cout << "1) Average daily rainfall" << endl;
+        6:   55:	cout << "2) Average rainfall on rainy days" << endl;
+        6:   56:	cout << "3) Count of days that had rain" << endl;
+        6:   57:	cout << "4) Maximum rainfall" << endl;
+        6:   58:	cout << "5) Top 5 days of rain" << endl;
+        6:   59:	cout << "6) Quit" << endl;
+        6:   60:}
+        1:   61:void Rainfall::print_avg_daily(vector<int>& totalDays) {
+       1*:   62:	if (totalDays.size() == 0) cout << "NO DATA" << endl;
+        1:   63:	else cout << (accumulate(totalDays.begin(), totalDays.end(), 0) / totalDays.size()) << endl;
+        1:   64:}
+        1:   65:void Rainfall::print_avg_rainy(vector<int>& rainyDays) {
+       1*:   66:	if (rainyDays.size() == 0) cout << "NO DATA" << endl;
+        1:   67:	else cout << (accumulate(rainyDays.begin(), rainyDays.end(), 0) / rainyDays.size()) << endl;
+        1:   68:}
+        1:   69:void Rainfall::print_total_rainfall(vector<int>& rainyDays, vector<int>& totalDays) {
+       1*:   70:	if (totalDays.size() == 0) cout << "NO DATA" << endl;
+        1:   71:	else cout << rainyDays.size() << endl;
+        1:   72:}
+        1:   73:void Rainfall::print_max_rainfall(vector<int>& rainyDays) {
+       1*:   74:	if (rainyDays.size() == 0) cout << "NO DATA" << endl;
+        1:   75:	else cout << *max_element(rainyDays.begin(), rainyDays.end()) << endl;
+        1:   76:}
+        1:   77:void Rainfall::print_top_rainfall(vector<int>& rainyDays) {
+       1*:   78:	if (rainyDays.size() == 0) cout << "NO DATA" << endl;
+        -:   79:	else {
+        1:   80:		sort(rainyDays.rbegin(), rainyDays.rend());
+        1:   81:		if (rainyDays.size() > 5) {
+        6:   82:			for (int i = 0; i < 5; i++) {
+        5:   83:				cout << rainyDays.at(i) << endl;
+        -:   84:			}
+        -:   85:		} else {
+    #####:   86:			for (int i = 0; i < static_cast<int>(rainyDays.size()); i++) {
+    #####:   87:				cout << rainyDays.at(i) << endl;
+        -:   88:			}
+        -:   89:		}
+        -:   90:	}
+        1:   91:}
+        -:   92:
+        1:   93:void Rainfall::write_benchmark(const int version, const float timer, vector<int>& totalDays) {
+        1:   94:	fstream file("benchmark.txt", fstream::app);
+        1:   95:	file << "Version: " + to_string(version) + "\n";
+        1:   96:	file << "Days: " + to_string(totalDays.size()) + "\n";
+        1:   97:	file << "Time: " + to_string(timer) + "\n\n";
+        1:   98:	file.close();
+        1:   99:}
