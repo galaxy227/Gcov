@@ -80,11 +80,11 @@ void Rainfall::print_top_rainfall(vector<int>& rainyDays) {
 		sort(rainyDays.rbegin(), rainyDays.rend());
 		if (rainyDays.size() > 5) [[likely]] {
 			for (int i = 0; i < 5; i++) {
-				cout << rainyDays[i] << endl;
+				cout << rainyDays[i] << endl; //only spot where .at() can change
 			}
 		} else {
 			for (int i = 0; i < static_cast<int>(rainyDays.size()); i++) {
-				cout << rainyDays[i] << endl;
+				cout << rainyDays[i] << endl; //only spot where .at() can change
 			}
 		}
 	}
