@@ -60,19 +60,19 @@ void Rainfall::print_user_prompt() {
 }
 void Rainfall::print_avg_daily(vector<int>& totalDays) {
 	if (totalDays.size() == 0) cout << "NO DATA" << endl;
-	else cout << (accumulate(totalDays.begin(), totalDays.end(), 0) / totalDays.size()) << endl;
+	else [[likely]] cout << (accumulate(totalDays.begin(), totalDays.end(), 0) / totalDays.size()) << endl;
 }
 void Rainfall::print_avg_rainy(vector<int>& rainyDays) {
 	if (rainyDays.size() == 0) cout << "NO DATA" << endl;
-	else cout << (accumulate(rainyDays.begin(), rainyDays.end(), 0) / rainyDays.size()) << endl;
+	else [[likely]] cout << (accumulate(rainyDays.begin(), rainyDays.end(), 0) / rainyDays.size()) << endl;
 }
 void Rainfall::print_total_rainfall(vector<int>& rainyDays, vector<int>& totalDays) {
 	if (totalDays.size() == 0) cout << "NO DATA" << endl;
-	else cout << rainyDays.size() << endl;
+	else [[likely]] cout << rainyDays.size() << endl;
 }
 void Rainfall::print_max_rainfall(vector<int>& rainyDays) {
 	if (rainyDays.size() == 0) cout << "NO DATA" << endl;
-	else cout << *max_element(rainyDays.begin(), rainyDays.end()) << endl;
+	else [[likely]] cout << *max_element(rainyDays.begin(), rainyDays.end()) << endl;
 }
 void Rainfall::print_top_rainfall(vector<int>& rainyDays) {
 	if (rainyDays.size() == 0) [[unlikely]] cout << "NO DATA" << endl;
