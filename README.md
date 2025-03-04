@@ -1,5 +1,6 @@
 # GCOV: A REPORT ON OPTIMIZATION & TEST CASES 
 *README curated by Gianni Joseph Bellucci* 
+https://github.com/galaxy227/Gcov.git
 
 ## What does the program do? 
 > Rainfall is an introductory practice problem in computer science wherein a user inputs a series of measurements which are then used to calculate the total rainfall periodically. It processes this information by handling improper values and adding them to a data structure. This data structure records a list of parameters that are then used to calculate the rainfall. 
