@@ -6,25 +6,39 @@
 
 ## What was the hottest loop in the program?
 > Our hottest loop is the following: 
-> `while (userChoice < 1 or userChoice > 6) {
-        6:   25:		Rainfall::print_user_prompt();	
-        -:   26:
-        6:   27:		cin >> userChoice;
-        -:   28:		//If user's input is invalid, clear it and reprompt.
-        6:   29:		if (!cin) {
-    #####:   30:			exit(1);
-        -:   31:		}
-        -:   32:		//Else if they choose something outside of 1 - 5...
-        6:   33:		else if (userChoice < 1 or userChoice > 6) {
-    #####:   34:			while (userChoice < 1 or userChoice > 6) {
-    #####:   35:				cin.clear();
-    #####:   36:				cin.ignore(2200000000, '\n');
-        -:   37:
-    #####:   38:				Rainfall::print_user_prompt();
-        -:   39:
-    #####:   40:				cin >> userChoice;
-        -:   41:			}
-        -:   42:		}` 
+while (data != -1) {
+    if (data == -1) break;
+
+    // If they enter anything but a number, die.
+    if (!cin) {
+        die();
+    }
+    // Else if data is any negative number besides -1.
+    else if (data < -1) {
+        // While data is a negative number other than -1...
+        while (data < -1) {
+            // If input is invalid, die.
+            if (!cin) die();
+            // Else, discard it and reprompt.
+            else {
+                cin.clear();
+                cin.ignore(2200000000, '\n');
+                cin >> data;
+
+                if (data == -1) break;
+            }
+        }
+        if (data == -1) break;
+    }
+
+    // If valid, add the data point to the vector rainyDays.
+    if (data > 0) {
+        rainyDays.push_back(data);
+    }
+
+    // Keep track of all days.
+    totalDays.
+
 
 ## -1) Declans Code: 
 > **Note: this part includes `declan_rainfall.cc` and `asm_max_element`, which is my assembly version of max_element().** My idea for optimization was to write `max_element()` in ARM32. I did five runs with 10 million inputs fed into our program for both the unoptimized and optimized versions. The unoptimized (but still using -O3) time was **2.9568846 seconds**. The optimized (still using -O3) time was **2.916048 seconds**. This is approximately a 1% improvement, however the improvement is fairly significantly better the lower down the -Ox (g++ optimizer) route you go. This optimization was ultimately an improvement, even by a small margin. However, when considering simulations or games that must have tens of millions or even billions of operations a second, this is a significant improvement. Especially when taking into considerations other areas of optimization.
@@ -39,7 +53,7 @@
 > My part includes `corben_rainfall.cc`. The unoptimized -O3 time was **4.745564** for a 1 million input test, and the optimized version came out to **4.637468**, which is a little more than a 2.25% decrease in time overall. The main techniques I used were the [[likely]] and  [[unlikely]] attributes, as well as accessing elements with `[]` instead of `.at()`. We are unable to use Constexpr and Consteval in this scenario due to all of the variables being added after compilation in the 'user' input.
 
 ## -1.4) Jacob's Code: 
-> 
+> First, I coded a generator to create our input files with parameters for size, seed, and rainfall. Next, I organized all of the logic from Declan's original `main.cc` into separate functions, so others would be able to write improvements by including `rainfall.h` in their file. Afterward, I threw everything into a Makefile to link our project with gcov. Lastly, I wrote a benchmark that automatically writes the results to `benchmark.txt` to easily compare timings over the course of our project.
 
 ![Contributions](./screen1.png)
 ![ibid.](./screen2.png)
