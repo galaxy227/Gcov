@@ -1,4 +1,4 @@
-#include "Rainfall.h"
+#include "rainfall.h"
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -63,10 +63,12 @@ void Rainfall::print_user_prompt() {
 void Rainfall::print_avg_daily(vector<int>& totalDays) {
 	if (totalDays.size() == 0) cout << "NO DATA" << endl;
 	else cout << (asm_accum(totalDays.data(), totalDays.size()) / totalDays.size()) << endl;
+	//else cout << (accumulate(totalDays.begin(), totalDays.end(), 0) / totalDays.size()) << endl;
 }
 void Rainfall::print_avg_rainy(vector<int>& rainyDays) {
 	if (rainyDays.size() == 0) cout << "NO DATA" << endl;
 	else cout << (asm_accum(rainyDays.data(), rainyDays.size()) / rainyDays.size()) << endl;
+	//else cout << (accumulate(rainyDays.begin(), rainyDays.end(), 0) / rainyDays.size()) << endl;
 }
 void Rainfall::print_total_rainfall(vector<int>& rainyDays, vector<int>& totalDays) {
 	if (totalDays.size() == 0) cout << "NO DATA" << endl;

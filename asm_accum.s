@@ -1,9 +1,6 @@
 .global asm_accum
 
 asm_accum:
-	PUSH {LR}
-	PUSH {R4-R12}
-
 	MOV R2,#0
 LOOP:
 	CMP R1,#0
@@ -14,6 +11,5 @@ LOOP:
 	BNE LOOP
 DONE:
 	MOV R0,R2
-	POP {R4-R12}
-	POP {PC}
+	BX LR
 .section .note.GNU-stack
