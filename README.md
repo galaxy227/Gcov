@@ -12,3 +12,7 @@
 
 ## -1.3) Corbin's Code: 
 > My part includes `corben_rainfall.cc`. The unoptimized -O3 time was **4.745564** for a 1 million input test, and the optimized version came out to **4.637468**, which is a little more than a 2.25% decrease in time overall. The main techniques I used were the [[likely]] and  [[unlikely]] attributes, as well as accessing elements with `[]` instead of `.at()`. We are unable to use Constexpr and Consteval in this scenario due to all of the variables being added after compilation in the 'user' input.
+
+![Contributions](./screen1.png)
+![ibid.](./screen2.png)
+![ibid.](./screen3.png)
