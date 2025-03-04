@@ -27,7 +27,7 @@ void Rainfall::init_data(vector<int>& rainyDays, vector<int>& totalDays) {
 			//While data is a negative number other than -1...
 			while (data < -1) {
 				//If input is invalid, die.
-				if (!cin) die();
+				if (!cin) [[unlikely]] die();
 				//Else, discard it and reprompt.
 				else {
 					cin.clear();
