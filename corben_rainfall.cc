@@ -18,7 +18,7 @@ void Rainfall::init_data(vector<int>& rainyDays, vector<int>& totalDays) {
 	while (data != -1) [[likely]] {
 		if (data == -1) break;
 
-		//If they enter anything but a number, die.
+		//If they enter anything but a number, perish.
 		if (!cin) {
 			die();
 		}
