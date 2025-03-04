@@ -1,6 +1,31 @@
 # GCOV: A REPORT ON OPTIMIZATION & TEST CASES 
 *README curated by Gianni Joseph Bellucci* 
 
+## What does the program do? 
+> Rainfall is an introductory practice problem in computer science wherein a user inputs a series of measurements which are then used to calculate the total rainfall periodically. It processes this information by handling improper values and adding them to a data structure. This data structure records a list of parameters that are then used to calculate the rainfall. 
+
+## What was the hottest loop in the program?
+> Our hottest loop is the following: 
+> `while (userChoice < 1 or userChoice > 6) {
+        6:   25:		Rainfall::print_user_prompt();	
+        -:   26:
+        6:   27:		cin >> userChoice;
+        -:   28:		//If user's input is invalid, clear it and reprompt.
+        6:   29:		if (!cin) {
+    #####:   30:			exit(1);
+        -:   31:		}
+        -:   32:		//Else if they choose something outside of 1 - 5...
+        6:   33:		else if (userChoice < 1 or userChoice > 6) {
+    #####:   34:			while (userChoice < 1 or userChoice > 6) {
+    #####:   35:				cin.clear();
+    #####:   36:				cin.ignore(2200000000, '\n');
+        -:   37:
+    #####:   38:				Rainfall::print_user_prompt();
+        -:   39:
+    #####:   40:				cin >> userChoice;
+        -:   41:			}
+        -:   42:		}` 
+
 ## -1) Declans Code: 
 > **Note: this part includes `declan_rainfall.cc` and `asm_max_element`, which is my assembly version of max_element().** My idea for optimization was to write `max_element()` in ARM32. I did five runs with 10 million inputs fed into our program for both the unoptimized and optimized versions. The unoptimized (but still using -O3) time was **2.9568846 seconds**. The optimized (still using -O3) time was **2.916048 seconds**. This is approximately a 1% improvement, however the improvement is fairly significantly better the lower down the -Ox (g++ optimizer) route you go. This optimization was ultimately an improvement, even by a small margin. However, when considering simulations or games that must have tens of millions or even billions of operations a second, this is a significant improvement. Especially when taking into considerations other areas of optimization.
 
@@ -10,8 +35,11 @@
 ## -1.2) Gianni's Code: 
 > For this, I manipulated the `main.cc` and `rainfall.cc` file for optimization purposes, which includes a while-loop that runs continuously to capture user input from the command line. Switch-cases were initially considered to replace the typical if-else conditional, as jump tables have faster compiler times, but this was discarded. Assembly was also considered for cin, but this stream buffer would be nearly impossible to emulate in ARM32. The changes were made to the logic of the while loop, becoming a simple while(true). Large arbitrary numbers hard-coded for test case purposes became `std::numeric_limits<int>::max()` numeric limits function. I got **2.9610952 seconds** for unoptimized -O3 and **2.8673276 seconds** for optimized -O3, leading to a 1% improvement using the new code. 
 
-## -1.3) Corbin's Code: 
+## -1.3) Corben's Code: 
 > My part includes `corben_rainfall.cc`. The unoptimized -O3 time was **4.745564** for a 1 million input test, and the optimized version came out to **4.637468**, which is a little more than a 2.25% decrease in time overall. The main techniques I used were the [[likely]] and  [[unlikely]] attributes, as well as accessing elements with `[]` instead of `.at()`. We are unable to use Constexpr and Consteval in this scenario due to all of the variables being added after compilation in the 'user' input.
+
+## -1.4) Jacob's Code: 
+> 
 
 ![Contributions](./screen1.png)
 ![ibid.](./screen2.png)
